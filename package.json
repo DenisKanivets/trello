@@ -1,0 +1,16 @@
+{
+  "name": "final-project-trello-test111",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "front": "yarn --cwd front run start",
+    "back": "yarn --cwd back run start",
+    "dev": "concurrently -r \"yarn run back\"  \"yarn run front\"",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.1"
+  },
+  "dependencies": {}
+}

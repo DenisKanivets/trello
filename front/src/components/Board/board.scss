@@ -1,0 +1,42 @@
+@import '../../assets/colors';
+
+.board-wrapper {
+  min-height: 120px;
+  width: 240px;
+  margin: 30px;
+  background: $blue;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 10px $darkGrey;
+  transition: all 0.3s linear;
+
+  .close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-size: 20px;
+    color: $red;
+    cursor: pointer;
+  }
+
+  .board {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    .title {
+      text-transform: uppercase;
+      color: $lightGrey;
+      word-break: break-all;
+    }
+
+    .description {
+      color: $lightGrey;
+      word-break: break-all;
+    }
+  }
+}
