@@ -1,0 +1,110 @@
+@import '../../assets/colors';
+
+.card-modal-wrapper {
+
+  .card-modal-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .card-modal-icon {
+    font-size: 25px;
+    color: $black;
+    width: 25px;
+    min-width: 25px;
+  }
+
+  .card-modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 30px;
+    color: $black;
+  }
+
+  .close-modal {
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .modal-calendar {
+    position: absolute;
+  }
+
+  .card-modal-checkbox {
+    top: 0;
+  }
+
+  .card-modal-time {
+    margin-right: 10px;
+  }
+
+  .card-modal-complete-text {
+    color: #fff;
+    font-size: 12px;
+    background: $green;
+    padding: 2px;
+    border-radius: 2px;
+  }
+
+  .card-modal-list-info {
+    color: $darkGrey;
+    font-size: 14px;
+    margin-left: 55px;
+    margin-bottom: 40px;
+  }
+
+  .card-modal-description {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 30px;
+    color: $black;
+  }
+
+  .card-modal-textarea {
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    margin: 15px 0 0 55px;
+  }
+
+  .card-modal-button {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    background: $green;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    padding: 5px 20px;
+    margin: 5px 55px;
+    width: 136px;
+  }
+
+  .calendar-button {
+    background: $darkGrey;
+  }
+
+  .archive {
+    margin-top: 20px;
+  }
+
+  .card-modal-archive {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    background: $red;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    padding: 5px 20px;
+    margin: 5px 30px;
+    width: 136px;
+  }
+}

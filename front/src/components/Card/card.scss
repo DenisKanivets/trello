@@ -1,0 +1,48 @@
+@import '../../assets/colors';
+
+.card-wrapper {
+  border-radius: 5px;
+  background: #fff;
+  padding: 20px;
+  margin: 3px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover .card-edit-icon {
+    opacity: 1;
+  }
+
+  .card-edit-icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: $darkGrey;
+    font-size: 14px;
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  .card-time {
+    padding: 3px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    font-size: 10px;
+    color: $darkGrey;
+  }
+
+  .green-time {
+    background: $green;
+    color: #fff;
+  }
+
+  .yellow-time {
+    background: $yellow;
+  }
+
+  .red-time {
+    background: $red;
+    color: #fff;
+  }
+}
