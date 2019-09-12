@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import boardsCollection from './boardsCollection/reducers';
-import activeBoardData from './activeBoardData/reducers';
+import activeBoard from './activeBoard/reducers';
 
 export default combineReducers({
-    boardsCollection,
-    activeBoardData,
+  boardsCollection,
+  activeBoard,
 });

@@ -1,0 +1,46 @@
+@import '../../assets/colors';
+
+.add-new-list-wrapper {
+  height: 120px;
+  min-width: 240px;
+  margin: 10px 0 10px 30px;
+  background: #e5e5e5;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .new-list-input {
+    margin: 0 10px 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 7px;
+    padding: 10px;
+    outline: none;
+  }
+
+  .new-list-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .add-button {
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      background: $green;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      padding: 5px 40px;
+    }
+
+    .close {
+      font-size: 24px;
+      color: $red;
+      cursor: pointer;
+    }
+  }
+
+}

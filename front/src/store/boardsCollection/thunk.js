@@ -1,32 +1,40 @@
 import axios from 'axios';
-import {loadBoardsData, boardsData, boardsDataError} from './actions';
-import uniqueRandom from "unique-random";
+import { loadBoardsData, boardsData, boardsDataError } from './actions';
+import uniqueRandom from 'unique-random';
+
 const uniqueId = uniqueRandom(100000, 999999);
 
 export const getAllBoards = () => async dispatch => {
+  try {
     dispatch(loadBoardsData());
-    await axios.get('/boards')
-        .then(res => dispatch(boardsData(res.data)))
-        .catch(err => dispatch(boardsDataError(err)));
+    const res = await axios.get('/boards');
+    dispatch(boardsData(res.data));
+  } catch (err) {
+    dispatch(boardsDataError(err));
+  }
 };
 
 export const addNewBoard = payload => async dispatch => {
-    const newItem = {
-        id: uniqueId(),
-        title: payload.title,
-        description: payload.description,
+  try {
+    const data = {
+      id: uniqueId(),
+      title: payload.title,
+      description: payload.description,
     };
-    await axios.post('/boards/add', {newItem})
-        .catch(err => dispatch(boardsDataError(err)));
-    await axios.get('/boards')
-        .then(res => dispatch(boardsData(res.data)))
-        .catch(err => dispatch(boardsDataError(err)));
+    const addRes = await axios.post('/boards/add', data);
+    const res = await axios.get('/boards');
+    dispatch(boardsData(res.data));
+  } catch (err) {
+    dispatch(boardsDataError(err));
+  }
 };
 
 export const deleteBoard = payload => async dispatch => {
-    await axios.post(`/boards/delete/${payload}`)
-        .catch(err => dispatch(boardsDataError(err)));
-    await axios.get('/boards')
-        .then(res => dispatch(boardsData(res.data)))
-        .catch(err => dispatch(boardsDataError(err)));
+  try {
+    const delRes = await axios.post(`/boards/delete/${payload}`);
+    const res = await axios.get('/boards');
+    dispatch(boardsData(res.data));
+  } catch (err) {
+    dispatch(boardsDataError(err));
+  }
 };

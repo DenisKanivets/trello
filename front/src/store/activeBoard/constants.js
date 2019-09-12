@@ -1,0 +1,5 @@
+export const SET_ACTIVE_BOARD = 'activeBoard/SET_ACTIVE_BOARD';
+export const LOAD_ACTIVE_BOARD_DATA = 'activeBoard/LOAD_ACTIVE_BOARD_DATA';
+export const LOAD_ACTIVE_BOARD_DATA_SUCCESS = 'activeBoard/LOAD_ACTIVE_BOARD_DATA_SUCCESS';
+export const LOAD_ACTIVE_BOARD_DATA_ERROR = 'activeBoard/LOAD_ACTIVE_BOARD_DATA_ERROR';
+export const HANDLE_DROP = 'activeBoard/HANDLE_DROP';
