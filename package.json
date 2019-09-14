@@ -5,8 +5,10 @@
   "license": "MIT",
   "scripts": {
     "front": "yarn --cwd front run start",
+    "front-build": "yarn --cwd front run build",
     "back": "yarn --cwd back run start",
     "dev": "concurrently -r \"yarn run back\"  \"yarn run front\"",
+    "build": "concurrently -r \"yarn run back\"  \"yarn run front-build\"",
     "lint": "eslint"
   },
   "devDependencies": {
