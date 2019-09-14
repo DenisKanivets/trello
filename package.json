@@ -11,8 +11,5 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.1"
-  },
-  "dependencies": {
-    "react-beautiful-dnd": "^11.0.5"
   }
 }
