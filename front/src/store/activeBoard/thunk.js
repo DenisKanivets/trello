@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setBoard, loadActiveBoardData, activeBoardData, activeBoardDataError, handleDrop } from './actions';
+import { setBoard, loadActiveBoardData, activeBoardData, activeBoardDataError, handleDrop } from './reducers';
 import uniqueRandom from 'unique-random';
 
 const uniqueId = uniqueRandom(100000, 999999);

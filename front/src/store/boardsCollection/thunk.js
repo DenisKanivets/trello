@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loadBoardsData, boardsData, boardsDataError } from './actions';
+import { loadBoardsData, boardsData, boardsDataError } from './reducers';
 import uniqueRandom from 'unique-random';
 
 const uniqueId = uniqueRandom(100000, 999999);
