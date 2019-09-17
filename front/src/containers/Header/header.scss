@@ -1,0 +1,64 @@
+@import '../../assets/colors';
+
+.header {
+  width: 100vw;
+  padding: 20px;
+  background: $blue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .home {
+    color: $lightGrey;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+
+  .title {
+    color: $lightGrey;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      padding-left: 10px;
+    }
+  }
+
+  .user-content {
+    position: absolute;
+    right: 20px;
+    top: 7px;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 25px;
+    }
+
+    h5 {
+      color: $lightGrey;
+      margin-left: 5px;
+    }
+
+    .logout-btn {
+      border: none;
+      border-radius: 5px;
+      margin-left: 10px;
+      background: transparent;
+      color: $lightGrey;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
+      padding: 5px;
+
+      &:hover {
+        background: $red;
+        color: $lightGrey;
+      }
+    }
+  }
+};

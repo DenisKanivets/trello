@@ -12,6 +12,7 @@ import {
   updateCardStatus,
   deleteCard,
 } from '../../store/activeBoard/thunk';
+import { getUser } from '../../store/auth/thunk';
 import { getAllBoards } from '../../store/boardsCollection/thunk';
 import Loader from 'react-loader-spinner';
 import ReactModal from 'react-modal';
@@ -33,15 +34,24 @@ class ActiveBoard extends Component {
   };
 
   async componentDidMount() {
-    const { onGetAllBoards, onSetActiveBoard, match } = this.props;
-    await onGetAllBoards();
-    await onSetActiveBoard(match.params.id);
+    const { onGetAllBoards, onGetUser, onSetActiveBoard, auth: { userInfo }, match, history } = this.props;
+    const userIdFromLS = localStorage.getItem('userId');
+    const userId = userIdFromLS.substring(userIdFromLS.indexOf('-') + 1, userIdFromLS.length);
+    if (userIdFromLS && !userInfo.userId) {
+      await onGetUser(userId);
+      await onGetAllBoards(userId);
+      await onSetActiveBoard(match.params.id);
+    } else if (userIdFromLS && userInfo.userId) {
+      await onSetActiveBoard(match.params.id);
+    }else {
+      history.push('');
+    }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (JSON.stringify(nextProps.activeBoardData.lists) !== JSON.stringify(prevState.localListsData)
-      && !nextProps.handleDropLoading) {
-      return { localListsData: nextProps.activeBoardData.lists };
+    if (nextProps.activeBoard.activeBoardData && JSON.stringify(nextProps.activeBoard.activeBoardData.lists) !== JSON.stringify(prevState.localListsData)
+      && !nextProps.activeBoard.handleDropLoading) {
+      return { localListsData: nextProps.activeBoard.activeBoardData.lists };
     }
     return null;
   }
@@ -105,8 +115,7 @@ class ActiveBoard extends Component {
 
   onDragEnd = async result => {
     const { destination, source, draggableId, type } = result;
-    let newListsData = this.props.activeBoardData.lists;
-
+    let newListsData = this.props.activeBoard.activeBoardData.lists;
     if (!destination) return;
     if (destination.droppableId === source.droppableId && destination.index === source.index) return;
     if (type === 'list') {
@@ -147,7 +156,7 @@ class ActiveBoard extends Component {
   };
 
   render() {
-    const { activeBoardData: { boardTitle, boardDescription }, loading } = this.props;
+    const { activeBoardData: { boardTitle, boardDescription }, loading } = this.props.activeBoard;
     const { newListTitle, activeAddNewList, modalCardWindow, modalCardData, modalListData, localListsData } = this.state;
     return (
       <div className='active-board-wrapper'>
@@ -190,8 +199,6 @@ class ActiveBoard extends Component {
             className='loader'
           /> : (
             <DragDropContext
-              // onDragStart={}
-              // onDragUpdate={}
               onDragEnd={this.onDragEnd}>
               <Droppable droppableId='all-lists' direction='horizontal' type='list'>
                 {(provided) => (
@@ -234,13 +241,14 @@ class ActiveBoard extends Component {
 }
 
 const mapStateToProps = state => {
-  return state.activeBoard;
+  return state;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    onGetUser: payload => dispatch(getUser(payload)),
     onSetActiveBoard: payload => dispatch(setActiveBoard(payload)),
-    onGetAllBoards: () => dispatch(getAllBoards()),
+    onGetAllBoards: payload => dispatch(getAllBoards(payload)),
     onAddNewList: payload => dispatch(addNewList(payload)),
     onDeleteList: payload => dispatch(deleteList(payload)),
     onRenameList: payload => dispatch(renameList(payload)),

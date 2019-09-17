@@ -1,0 +1,21 @@
+@import '../../assets/colors';
+
+.login-content {
+  margin: 150px auto 0;
+  padding: 40px 0;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+  border: 1px solid $mediumGrey;
+  background: $mediumGrey;
+  border-radius: 15px ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  h4 {
+    color: $blue;
+    font-size: 20px;
+  }
+}

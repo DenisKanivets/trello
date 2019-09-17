@@ -4,35 +4,39 @@ import uniqueRandom from 'unique-random';
 
 const uniqueId = uniqueRandom(100000, 999999);
 
-export const getAllBoards = () => async dispatch => {
+export const getAllBoards = payload => async (dispatch, getState) => {
   try {
+    const activeUserId = await getState().auth.userInfo.userId;
     dispatch(loadBoardsData());
-    const res = await axios.get('/boards');
+    const res = await axios.get(`/all-boards/${activeUserId || payload}`);
     dispatch(boardsData(res.data));
   } catch (err) {
     dispatch(boardsDataError(err));
   }
 };
 
-export const addNewBoard = payload => async dispatch => {
+export const addNewBoard = payload => async (dispatch, getState) => {
   try {
+    const activeUserId = getState().auth.userInfo.userId;
     const data = {
+      userId: activeUserId,
       id: uniqueId(),
       title: payload.title,
       description: payload.description,
     };
     const addRes = await axios.post('/boards/add', data);
-    const res = await axios.get('/boards');
+    const res = await axios.get(`/all-boards/${activeUserId}`);
     dispatch(boardsData(res.data));
   } catch (err) {
     dispatch(boardsDataError(err));
   }
 };
 
-export const deleteBoard = payload => async dispatch => {
+export const deleteBoard = payload => async (dispatch, getState) => {
   try {
+    const activeUserId = getState().auth.userInfo.userId;
     const delRes = await axios.post(`/boards/delete/${payload}`);
-    const res = await axios.get('/boards');
+    const res = await axios.get(`/all-boards/${activeUserId}`);
     dispatch(boardsData(res.data));
   } catch (err) {
     dispatch(boardsDataError(err));

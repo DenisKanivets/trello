@@ -6,6 +6,7 @@ const uniqueId = uniqueRandom(100000, 999999);
 
 router.post('/boards/add', (req, res) => {
   const newBoard = {
+    userId: req.body.userId,
     boardId: req.body.id,
     boardTitle: req.body.title,
     boardDescription: req.body.description,

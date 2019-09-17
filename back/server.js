@@ -18,6 +18,8 @@ const deleteCard = require('./routes/deleteCard');
 const updateCardDescription = require('./routes/updateCardDescription');
 const updateCardEndTime = require('./routes/updateCardEndTime');
 const updateCardStatus = require('./routes/updateCardStatus');
+const newUser = require('./routes/newUser');
+const getUser = require('./routes/getUser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,6 +43,8 @@ app.use('/', deleteCard);
 app.use('/', updateCardDescription);
 app.use('/', updateCardEndTime);
 app.use('/', updateCardStatus);
+app.use('/', newUser);
+app.use('/', getUser);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../front/public/index.html'));

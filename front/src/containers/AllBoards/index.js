@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllBoards, addNewBoard, deleteBoard } from '../../store/boardsCollection/thunk';
+import { getUser } from '../../store/auth/thunk';
 import AddNewBoard from '../../components/AddNewBoard';
 import BaseButton from '../../components/BaseButton';
 import Board from '../../components/Board';
@@ -15,9 +16,18 @@ class AllBoards extends Component {
     activeAddNewForm: false,
   };
 
-  componentDidMount() {
-    const { onGetAllBoards, boardsData } = this.props;
-    if (!boardsData.length) onGetAllBoards();
+  async componentDidMount() {
+    const { onGetAllBoards, onGetUser, auth: { userInfo }, history } = this.props;
+    const userIdFromLS = localStorage.getItem('userId');
+    const userId = userIdFromLS.substring(userIdFromLS.indexOf('-') + 1, userIdFromLS.length);
+    if (userIdFromLS && !userInfo.userId) {
+      await onGetUser(userId);
+      await onGetAllBoards(userId);
+    } else if (userIdFromLS && userInfo.userId) {
+      await onGetAllBoards(userId);
+    } else {
+      history.push('');
+    }
   }
 
   handleChange = e => {
@@ -40,13 +50,9 @@ class AllBoards extends Component {
     }
   };
 
-  goToBoard = id => {
-    this.props.history.push(`board/${id}`);
-  };
-
   render() {
     const { activeAddNewForm, newBoardTitle, newBoardDescription } = this.state;
-    const { loading, boardsData } = this.props;
+    const { boardsCollection: { loading, boardsData }, history } = this.props;
     return (
       <div className='all-boards-wrapper'>
         {loading ? <Loader
@@ -60,7 +66,7 @@ class AllBoards extends Component {
             key={item.boardId}
             label={item.boardTitle}
             description={item.boardDescription}
-            onClick={() => this.goToBoard(item.boardId)}
+            onClick={() => history.push(`boards/${item.boardId}`)}
             onDelete={() => this.props.onDeleteBoard(item._id)}
           />
         )) : null)}
@@ -97,12 +103,13 @@ class AllBoards extends Component {
 }
 
 const mapStateToProps = state => {
-  return state.boardsCollection;
+  return state;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAllBoards: () => dispatch(getAllBoards()),
+    onGetUser: payload => dispatch(getUser(payload)),
+    onGetAllBoards: payload => dispatch(getAllBoards(payload)),
     onAddNewBoard: payload => dispatch(addNewBoard(payload)),
     onDeleteBoard: payload => dispatch(deleteBoard(payload)),
   };
