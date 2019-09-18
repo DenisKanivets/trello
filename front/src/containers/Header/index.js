@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { FaHome, FaTrello } from 'react-icons/fa';
-import { Link, withRouter } from 'react-router-dom';
-import { GoogleLogout } from 'react-google-login';
-import { logout } from '../../store/auth/thunk';
-import './header.scss';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { FaHome, FaTrello } from "react-icons/fa";
+import { Link, withRouter } from "react-router-dom";
+import { GoogleLogout } from "react-google-login";
+import { logout } from "../../store/auth/thunk";
+import "./header.scss";
 
 class Header extends Component {
   logout = () => {
     const { onLogout, history } = this.props;
     onLogout();
-    localStorage.removeItem('userId');
-    history.push('');
+    localStorage.removeItem("userId");
+    history.push("");
   };
 
   render() {
@@ -27,11 +27,11 @@ class Header extends Component {
           <div className='user-content'>
             <img src={image} alt="avatar"/>
             <h5>{name}</h5>
-            {type === 'facebook' ? (
+            {type === "facebook" ? (
               <button className='logout-btn' onClick={(e) => {
                 e.preventDefault();
+                (window.FB && window.FB.logout());
                 this.logout();
-                window.FB.logout();
               }}>Log Out
               </button>
             ) : (
@@ -56,7 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogout: () => dispatch(logout()),
+    onLogout: () => dispatch(logout())
   };
 };
 

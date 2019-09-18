@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   setActiveBoard,
   addNewList,
@@ -10,46 +10,47 @@ import {
   updateCardDescription,
   updateCardEndTime,
   updateCardStatus,
-  deleteCard,
-} from '../../store/activeBoard/thunk';
-import { getUser } from '../../store/auth/thunk';
-import { getAllBoards } from '../../store/boardsCollection/thunk';
-import Loader from 'react-loader-spinner';
-import ReactModal from 'react-modal';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import AddNewList from '../../components/AddNewList';
-import BaseButton from '../../components/BaseButton';
-import List from '../../components/List';
-import CardModal from '../../components/CardModal';
-import './activeBoard.scss';
+  deleteCard
+} from "../../store/activeBoard/thunk";
+import { getUser } from "../../store/auth/thunk";
+import { getAllBoards } from "../../store/boardsCollection/thunk";
+import Loader from "react-loader-spinner";
+import ReactModal from "react-modal";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import AddNewList from "../../components/AddNewList";
+import BaseButton from "../../components/BaseButton";
+import List from "../../components/List";
+import CardModal from "../../components/CardModal";
+import "./activeBoard.scss";
 
 class ActiveBoard extends Component {
   state = {
-    newListTitle: '',
+    newListTitle: "",
     activeAddNewList: false,
     modalCardWindow: false,
     modalCardData: null,
     modalListData: null,
-    localListsData: [],
+    localListsData: []
   };
 
   async componentDidMount() {
     const { onGetAllBoards, onGetUser, onSetActiveBoard, auth: { userInfo }, match, history } = this.props;
-    const userIdFromLS = localStorage.getItem('userId');
-    const userId = userIdFromLS.substring(userIdFromLS.indexOf('-') + 1, userIdFromLS.length);
+    const userIdFromLS = localStorage.getItem("userId");
+    const userId = userIdFromLS.substring(userIdFromLS.indexOf("-") + 1, userIdFromLS.length);
     if (userIdFromLS && !userInfo.userId) {
       await onGetUser(userId);
       await onGetAllBoards(userId);
       await onSetActiveBoard(match.params.id);
     } else if (userIdFromLS && userInfo.userId) {
       await onSetActiveBoard(match.params.id);
-    }else {
-      history.push('');
+    } else {
+      history.push("");
     }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.activeBoard.activeBoardData && JSON.stringify(nextProps.activeBoard.activeBoardData.lists) !== JSON.stringify(prevState.localListsData)
+    if (nextProps.activeBoard.activeBoardData
+      && JSON.stringify(nextProps.activeBoard.activeBoardData.lists) !== JSON.stringify(prevState.localListsData)
       && !nextProps.activeBoard.handleDropLoading) {
       return { localListsData: nextProps.activeBoard.activeBoardData.lists };
     }
@@ -60,9 +61,9 @@ class ActiveBoard extends Component {
     const { newListTitle } = this.state;
     if (newListTitle.length > 0) {
       this.props.onAddNewList(newListTitle);
-      this.setState({ newListTitle: '', activeAddNewList: false });
+      this.setState({ newListTitle: "", activeAddNewList: false });
     } else {
-      alert('Error! Please, enter correct list name.');
+      alert("Error! Please, enter correct list name.");
     }
   };
 
@@ -76,7 +77,7 @@ class ActiveBoard extends Component {
       newItem.listTitle = newTitle;
       this.props.onRenameList(newItem);
     } else {
-      alert('Error! Please, enter correct list name.');
+      alert("Error! Please, enter correct list name.");
     }
   };
 
@@ -84,7 +85,7 @@ class ActiveBoard extends Component {
     if (newCardName.length > 0) {
       this.props.onAddNewCard(item._id, newCardName);
     } else {
-      alert('Error! Please, enter correct card name.');
+      alert("Error! Please, enter correct card name.");
     }
   };
 
@@ -92,7 +93,7 @@ class ActiveBoard extends Component {
     this.setState({
       modalCardWindow: true,
       modalCardData: card,
-      modalListData: item,
+      modalListData: item
     });
   };
 
@@ -118,7 +119,7 @@ class ActiveBoard extends Component {
     let newListsData = this.props.activeBoard.activeBoardData.lists;
     if (!destination) return;
     if (destination.droppableId === source.droppableId && destination.index === source.index) return;
-    if (type === 'list') {
+    if (type === "list") {
       let newLists = [...newListsData];
       newLists.splice(source.index, 1);
       newLists.splice(destination.index, 0, newListsData.filter(item => draggableId === item.listId)[0]);
@@ -167,16 +168,16 @@ class ActiveBoard extends Component {
           shouldCloseOnOverlayClick={true}
           style={{
             overlay: {
-              background: 'rgba(103, 128, 159, 0.7)',
+              background: "rgba(103, 128, 159, 0.7)"
             },
             content: {
-              background: '#f5f5f5',
-              width: '700px',
-              height: '470px',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            },
+              background: "#f5f5f5",
+              width: "700px",
+              height: "470px",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)"
+            }
           }}>
           <CardModal
             cardData={modalCardData}
@@ -206,7 +207,7 @@ class ActiveBoard extends Component {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                     className='drag-drop-context'
-                  >{localListsData ? localListsData.map((item, index) =>
+                  >{localListsData && localListsData.map((item, index) =>
                     <List
                       key={item.listId}
                       droppableIndex={index}
@@ -217,8 +218,8 @@ class ActiveBoard extends Component {
                       onAddNewCard={newCardName => this.addCard(item, newCardName)}
                       allCardsArray={item.cards}
                       openCardModal={card => this.openCardModal(card, item)}
-                    />,
-                  ) : null}
+                    />
+                  )}
                     {provided.placeholder}
                   </div>
                 )}
@@ -232,7 +233,7 @@ class ActiveBoard extends Component {
             /> :
             <BaseButton
               onClick={() => this.setState({ activeAddNewList: true })}
-              label={'Add New List'}
+              label={"Add New List"}
             />}
         </div>
       </div>
@@ -257,7 +258,7 @@ const mapDispatchToProps = dispatch => {
     onUpdateCardDescription: (newDescription, listId, cardId) => dispatch(updateCardDescription(newDescription, listId, cardId)),
     onUpdateCardEndTime: (newTime, listId, cardId) => dispatch(updateCardEndTime(newTime, listId, cardId)),
     onUpdateCardStatus: (newStatus, listId, cardId) => dispatch(updateCardStatus(newStatus, listId, cardId)),
-    onDeleteCard: (payload, listId) => dispatch(deleteCard(payload, listId)),
+    onDeleteCard: (payload, listId) => dispatch(deleteCard(payload, listId))
   };
 };
 

@@ -68,7 +68,7 @@ class List extends Component {
                     className='cards-content'
                     {...provided.droppableProps}
                   >
-                    {allCardsArray ? allCardsArray.map((item, index) =>
+                    {allCardsArray && allCardsArray.map((item, index) =>
                       <Card
                         key={item.cardId}
                         draggableId={item.cardId}
@@ -77,7 +77,7 @@ class List extends Component {
                         name={item.cardName}
                         time={item.cardEndTime}
                         complete={item.cardComplete}/>,
-                    ) : null}
+                    )}
                     {provided.placeholder}
                   </div>
                 )}

@@ -58,7 +58,7 @@ class CardModal extends Component {
           >
             {calendarModal ? 'Close' : 'Set Due Date'}
           </button>
-          {endTime ? <div className='card-modal-flex'>
+          {endTime && <div className='card-modal-flex'>
             <Checkbox
               className='card-modal-checkbox'
               size={2}
@@ -68,14 +68,14 @@ class CardModal extends Component {
               color={'#707070'}
             />
             <p className='card-modal-time'>{cardEndTimeShortString}</p>
-            {complete ? <p className='card-modal-complete-text'>COMPLETE</p> : null}
-          </div> : null}
+            {complete && <p className='card-modal-complete-text'>COMPLETE</p>}
+          </div>}
         </div>
-        {calendarModal ? <Calendar
+        {calendarModal && <Calendar
           minDate={new Date()}
           onClickDay={this.clickDay}
           className='modal-calendar'
-        /> : null}
+        />}
         <div className='card-modal-flex'>
           <FaStackExchange className='card-modal-icon'/>
           <p className='card-modal-description'>Description</p>
@@ -90,12 +90,12 @@ class CardModal extends Component {
             onBlur={() => this.setState({ editDescription: false })}
             value={description}
           />
-          {editDescription ? (
+          {editDescription && (
             <button
               className='card-modal-button'
               onMouseDown={() => saveDescription(description)}
             >Save Changes</button>
-          ) : null}
+          )}
         </div>
         <div>
           <div className='card-modal-flex archive'>

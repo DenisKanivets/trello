@@ -27,13 +27,13 @@ class Card extends Component {
           >
             <h5>{name}</h5>
             <FaRegEdit className='card-edit-icon'/>
-            {time ? <p className={`card-time ${colorTime}-time`}>
+            {time && <p className={`card-time ${colorTime}-time`}>
               {new Date(time).toLocaleDateString('en-GB', {
                 weekday: 'short',
                 month: 'short',
                 day: 'numeric',
               })}
-            </p> : null}
+            </p>}
           </div>
         )}
       </Draggable>

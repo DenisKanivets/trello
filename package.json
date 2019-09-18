@@ -7,11 +7,15 @@
     "front": "yarn --cwd front run start",
     "front-build": "yarn --cwd front run build",
     "back": "yarn --cwd back run start",
-    "dev": "concurrently -r \"yarn run back\"  \"yarn run front\"",
+    "dev": "run-script-os",
+    "dev:win32": "concurrently -r \"yarn run back\"  \"set HTTPS=true&&yarn run front\"",
+    "dev:darwin:linux": "concurrently -r \"yarn run back\"  \"HTTPS=true yarn run front\"",
+    "dev:default": "concurrently -r \"yarn run back\"  \"HTTPS=true yarn run front\"",
     "build": "concurrently -r \"yarn run back\"  \"yarn run front-build\"",
     "lint": "eslint"
   },
   "devDependencies": {
-    "concurrently": "^4.1.1"
+    "concurrently": "^4.1.1",
+    "run-script-os": "^1.0.7"
   }
 }

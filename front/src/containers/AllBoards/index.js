@@ -61,7 +61,7 @@ class AllBoards extends Component {
           height={200}
           width={200}
           className='loader'
-        /> : (boardsData ? boardsData.map(item => (
+        /> : (boardsData && boardsData.map(item => (
           <Board
             key={item.boardId}
             label={item.boardTitle}
@@ -69,7 +69,7 @@ class AllBoards extends Component {
             onClick={() => history.push(`boards/${item.boardId}`)}
             onDelete={() => this.props.onDeleteBoard(item._id)}
           />
-        )) : null)}
+        )))}
         <ReactModal
           isOpen={activeAddNewForm}
           ariaHideApp={false}
